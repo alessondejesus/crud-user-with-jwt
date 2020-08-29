@@ -3,9 +3,10 @@
 
 ### v1.0.x
 
-##### v1.0.3 beta
+##### v1.0.4 beta
 
-- Melhorias no código
+- Melhorias no app.js
+- Criação de arquivo auxiliar server.js
 - Acesse clicando no link abaixo:
 **[Clique Aqui para Acessar a API](https://rest-user-api-asn9006.herokuapp.com/ "Clique Aqui para Acessar a API")**
 ------------
