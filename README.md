@@ -23,7 +23,7 @@
 **GET**
 - Obtêm os dados do usuário e um **TOKEN** com expiração de 1 dia
 Envie os paramêtros via **BODY**:
-```json
+```javascript
 {
 email: 'emailexample@example.com',
 password: 'passwordExample'
@@ -34,7 +34,7 @@ password: 'passwordExample'
 **POST**
 - Cria um usuário e obtêm **TOKEN** com expiração de 1 dia
 Envie os paramêtros via **BODY**:
-```json
+```javascript
 {
 name: 'name Example',
 email: 'emailexample@example.com',
@@ -47,7 +47,7 @@ password: 'passwordExample'
 **DELETE**
 - Exclui um usuário
 Envie os paramêtros via **HEADER**:
-```
+```javascript
 {
 token: 't0k3n.3xamp13.'
 }
