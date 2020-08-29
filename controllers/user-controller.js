@@ -1,23 +1,10 @@
 var jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const service = require('../service/user')
+const Validate = require('../uteis/userRegex')
+const validate = new Validate()
 
-class Validate {
-    constructor() {
-        this.regexName = /^[^\s]{4,20}$/
-        this.regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-        this.regexPassword = /^\S{4,30}$/
-    }
-    name = name => this.regexName.test(name)
-    email = email => this.regexEmail.test(email)
-    password = password => this.regexPassword.test(password)
-    all = (name, email, password) => {
-        if (this.regexName.test(name) && this.regexEmail.test(email) && this.regexPassword.test(password)) {
-            return true
-        }
-        return false
-    }
-}
+
 class Controller {
     create = async (req, res) => {
         try {
@@ -25,7 +12,7 @@ class Controller {
             const email = req.body.email
             const password = req.body.password
 
-            const validate = new Validate()
+            
             let user = await service.findByEmail(email)
             if (validate.all(name, email, password)) {
                 return res
@@ -93,7 +80,6 @@ class Controller {
             //arrumar esses elses
             const email = req.body.email
             const password = req.body.password
-            const validate = new Validate()
             const user = await service.findByEmail(email)
             if (!validate.email(email) || !validate.password(password)) {
                 return res
@@ -143,4 +129,5 @@ class Controller {
         })
     }
 }
+
 module.exports = new Controller()

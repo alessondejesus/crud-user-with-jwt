@@ -8,4 +8,5 @@ mongoose
     })
     .then(() => console.log('sucess database'))
     .catch(err => console.log('failed database ' + err))
+
 module.exports = mongoose

@@ -3,9 +3,9 @@
 
 ### v1.0.x
 
-##### v1.0.2 beta
+##### v1.0.3 beta
 
-- Deploy feito no Heroku
+- Melhorias no código
 - Acesse clicando no link abaixo:
 **[Clique Aqui para Acessar a API](https://rest-user-api-asn9006.herokuapp.com/ "Clique Aqui para Acessar a API")**
 ------------
