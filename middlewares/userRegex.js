@@ -5,16 +5,14 @@ class Regex {
         this.regexName = /^[a-z]{4,20}$/
         this.regexEmail = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         this.regexPassword = /^\S{4,30}$/
-        this.serverMessageError = (res) => res.status(500).json({message: 'internal server error'})
+        this.serverMessageError = (res) => res.status(500).json({ message: 'internal server error' })
+        this.unauthorizedMessageError = (res) => res.status(401).json({ message: 'unauthorized' })
     }
     validateName = (req, res, next) => {
         try {
             const { name } = req.body
             if (!this.regexName.test(name)) {
-                return res
-                    .status(401).json({
-                        message: 'name not available'
-                    })
+                this.unauthorizedMessageError(res)
             }
             next()
         } catch (error) {
@@ -26,10 +24,7 @@ class Regex {
         try {
             const { email } = req.body
             if (!this.regexEmail.test(email)) {
-                return res
-                    .status(401).json({
-                        message: 'email not available'
-                    })
+                this.unauthorizedMessageError(res)
             }
             next()
         } catch (error) {
@@ -41,11 +36,7 @@ class Regex {
         try {
             const { password } = req.body
             if (!this.regexPassword.test(password)) {
-                return res
-                    .status(500)
-                    .json({
-                        message: 'password not available'
-                    })
+                this.unauthorizedMessageError(res)
             }
             next()
         } catch (error) {
@@ -59,11 +50,7 @@ class Regex {
             if (this.regexName.test(name) && this.regexEmail.test(email) && this.regexPassword.test(password)) {
                 return next()
             }
-            res
-                .status(401)
-                .json({
-                    message: 'name, email or password not available'
-                })
+            this.unauthorizedMessageError(res)
         } catch (error) {
             console.log(error)
             this.serverMessageError(res)
