@@ -1,12 +1,15 @@
 const express = require('express')
 const auth = require('../middlewares/auth')
-const controller = require('../controllers/user-controller')
+const Regex = require('../middlewares/userRegex')
+const Controller = require('../controllers/user-controller')
 const router = express.Router()
+const controller = new Controller()
+const regex = new Regex()
 
 router
-    .get('/', controller.show)
-    .post('/', controller.create)
-    .delete('/', auth, controller.delete)
-    .put('/', auth, controller.edit)
+    .get('/', regex.validateEmail, regex.validatePassword, controller.showUser)
+    .post('/', regex.validateAll, controller.createUser)
+    .delete('/', auth, controller.deleteUser)
+    .put('/', auth, controller.editUser)
 
 module.exports = router

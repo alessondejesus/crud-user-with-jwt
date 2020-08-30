@@ -2,8 +2,9 @@
 
 ### v1.0.x
 
-##### v1.0.5 beta
+##### v1.0.6 beta
 
+* userRegex.js agora passa a ser um middleware
 * Melhorias no código
 
 **[Clique Aqui para Acessar a API](https://rest-user-api-asn9006.herokuapp.com/ "Clique Aqui para Acessar a API")**

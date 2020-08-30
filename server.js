@@ -3,7 +3,7 @@ const user = require('./routes/user')
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const app = express()
-require('./config/database')
+require('./database')
 require('dotenv').config()
 
 class Server {

@@ -3,15 +3,8 @@ require('dotenv').config()
 
 const auth = async (req, res, next) => {
     try {
-        const header = req.headers.authorization
-        if (!header) {
-            return res
-                .status(401)
-                .json({
-                    message: 'token not found'
-                })
-        }
-        const [, token] = header.split(' ')
+        const {authorization} = req.headers
+        const [, token] = authorization.split(' ')
         await jwt.verify(token, process.env.JWT)
         next()
     } catch (error) {

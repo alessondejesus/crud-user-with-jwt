@@ -44,15 +44,15 @@ class Service {
     }
     deleteUser = async (id) => {
         try {
-            return await User.findByIdAndRemove(id)
+            await User.findByIdAndRemove(id)
         } catch (error) {
             console.log(error)
             res
                 .status(500)
                 .json({
-                    message: 'internal server error'
+                    message: 'invalid token'
                 })
         }
     }
 }
-module.exports = new Service()
+module.exports = Service
