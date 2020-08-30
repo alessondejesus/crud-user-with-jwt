@@ -44,7 +44,6 @@ class Service {
     }
     deleteUser = async (id) => {
         try {
-            console.log(id)
             return await User.findByIdAndRemove(id)
         } catch (error) {
             console.log(error)

@@ -1,4 +1,3 @@
-/* modules */
 const express = require('express')
 const user = require('./routes/user')
 const cors = require('cors')
@@ -8,7 +7,7 @@ require('./config/database')
 require('dotenv').config()
 
 class Server {
-    config = () => {
+    configurations = () => {
         app
             .use((req, res, next) => {
                 res

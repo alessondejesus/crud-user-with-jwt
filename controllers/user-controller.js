@@ -1,31 +1,27 @@
 var jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const service = require('../service/user')
-const Validate = require('../uteis/userRegex')
-const validate = new Validate()
+const Regex = require('../validations/userRegex')
+const regex = new Regex()
 
 
 class Controller {
     create = async (req, res) => {
         try {
-            const name = req.body.name
-            const email = req.body.email
-            const password = req.body.password
-
-            
+            const { name, email, password } = req.body
             let user = await service.findByEmail(email)
-            if (validate.all(name, email, password)) {
-                return res
-                    .status(401)
-                    .json({
-                        message: 'name or password not available'
-                    })
-            }
             if (user) {
                 return res
                     .status(401)
                     .json({
                         message: 'email not available'
+                    })
+            }
+            if (!regex.validateAll(name, email, password)) {
+                return res
+                    .status(401)
+                    .json({
+                        message: 'name or password not available'
                     })
             }
 
@@ -52,8 +48,8 @@ class Controller {
     delete = async (req, res) => {
         try {
             const [, token] = req.headers.authorization.split(' ')
-            const decoded = await jwt.verify(token, process.env.JWT).id
-            if (await service.deleteUser(decoded)) {
+            const { id } = await jwt.verify(token, process.env.JWT)
+            if (await service.deleteUser(id)) {
                 res
                     .status(200)
                     .json({
@@ -78,24 +74,21 @@ class Controller {
     show = async (req, res) => {
         try {
             //arrumar esses elses
-            const email = req.body.email
-            const password = req.body.password
+            const { email, password } = req.body
             const user = await service.findByEmail(email)
-            if (!validate.email(email) || !validate.password(password)) {
+            if (!regex.validateEmail(email) || !regex.validatePassword(password)) {
                 return res
                     .status(401)
                     .json({
                         message: 'unauthorized'
                     })
-            }
-            if (!user) {
+            } else if (!user) {
                 return res
                     .status(401)
                     .json({
                         message: 'unauthorized'
                     })
-            }
-            if (!await bcrypt.compare(password, user.password)) {
+            } else if (!await bcrypt.compare(password, user.password)) {
                 return res
                     .status(401)
                     .json({
